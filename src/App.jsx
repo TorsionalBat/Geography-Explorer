@@ -8,6 +8,20 @@ import data from "./data";
 
 function App() {
   const [filteredData, setFilteredData] = React.useState(data);
+  const [filters, setFilters] = React.useState({
+    startsWith: "",
+    contains: "",
+    containsExactly: "",
+    endsWith: "",
+  });
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
 
   // React.useEffect(() => {
   //   CountryFetcher.fetchCountries().then((returnedCountryData) => {
@@ -21,15 +35,10 @@ function App() {
   return (
     <>
       <h1>New app</h1>
-      <Filters />
+      <Filters filters={filters} handleFilterChange={handleFilterChange} />
       <Guess />
-      <Results />
+      <Results filteredData={filteredData} />
       <Statistics />
-      <ul>
-        {filteredData.map((country) => (
-          <li>{country.name.common}</li>
-        ))}
-      </ul>
     </>
   );
 }
