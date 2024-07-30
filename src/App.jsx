@@ -9,6 +9,8 @@ import data from "./data";
 function App() {
   // Country information that is rendered as the filters change
   const [filteredData, setFilteredData] = React.useState(data);
+  const [guess, setGuess] = React.useState(null);
+  const [guesses, setGuesses] = React.useState([]);
   const [filters, setFilters] = React.useState({
     startsWith: "",
     contains: "",
@@ -23,6 +25,15 @@ function App() {
       ...prevFilters,
       [name]: value,
     }));
+  };
+
+  const handleGuessChange = (event) => {
+    const guess = event.target.value;
+    setGuess(guess);
+  };
+
+  const handleGuess = (event) => {
+    console.log(event.target.value);
   };
 
   // Effect that is run on initialization of the application, fetches the
@@ -82,9 +93,9 @@ function App() {
     <>
       <h1>Geography Explorer</h1>
       <Filters filters={filters} handleFilterChange={handleFilterChange} />
-      <Guess />
-      <Results filteredData={filteredData} />
       <Statistics />
+      <Guess filteredData={filteredData} />
+      <Results filteredData={filteredData} />
     </>
   );
 }
