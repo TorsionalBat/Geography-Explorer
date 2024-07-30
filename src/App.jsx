@@ -9,31 +9,22 @@ import data from "./data";
 function App() {
   // Country information that is rendered as the filters change
   const [filteredData, setFilteredData] = React.useState(data);
-  const [guess, setGuess] = React.useState(null);
-  const [guesses, setGuesses] = React.useState([]);
   const [filters, setFilters] = React.useState({
     startsWith: "",
     contains: "",
     containsExactly: "",
     endsWith: "",
+    openLetters: false,
+    uppercase: false,
   });
 
   // Function that acts as an event handler for when the filters are changed
   const handleFilterChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
-  };
-
-  const handleGuessChange = (event) => {
-    const guess = event.target.value;
-    setGuess(guess);
-  };
-
-  const handleGuess = (event) => {
-    console.log(event.target.value);
   };
 
   // Effect that is run on initialization of the application, fetches the
@@ -84,6 +75,36 @@ function App() {
         );
       }
 
+      if (filters.openLetters) {
+        const openLetterSet = new Set([
+          "C",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y",
+          "Z",
+        ]);
+
+        filtered = filtered.filter((country) =>
+          [...country.name.common.toUpperCase()].every((char) =>
+            openLetterSet.has(char)
+          )
+        );
+      }
+
       setFilteredData(filtered);
     };
     applyFilters();
@@ -93,7 +114,7 @@ function App() {
     <>
       <h1>Geography Explorer</h1>
       <Filters filters={filters} handleFilterChange={handleFilterChange} />
-      <Statistics />
+      <Statistics filteredData={filteredData} />
       <Guess filteredData={filteredData} />
       <Results filteredData={filteredData} />
     </>
