@@ -7,8 +7,8 @@ import CountryFetcher from "./services/CountryFetcher";
 import data from "./data";
 
 function App() {
+  // Country information that is rendered as the filters change
   const [filteredData, setFilteredData] = React.useState(data);
-
   const [filters, setFilters] = React.useState({
     startsWith: "",
     contains: "",
@@ -16,6 +16,7 @@ function App() {
     endsWith: "",
   });
 
+  // Function that acts as an event handler for when the filters are changed
   const handleFilterChange = (event) => {
     const { name, value } = event.target;
     setFilters((prevFilters) => ({
@@ -24,6 +25,8 @@ function App() {
     }));
   };
 
+  // Effect that is run on initialization of the application, fetches the
+  // country data from the API
   // React.useEffect(() => {
   //   CountryFetcher.fetchCountries().then((returnedCountryData) => {
   //     const returnedCountryNames = Object.values(returnedCountryData).map(
@@ -32,6 +35,48 @@ function App() {
   //     setCountries(returnedCountryNames);
   //   });
   // }, []);
+
+  // Effect to be run when the filters change, or the data changes to render the list
+  React.useEffect(() => {
+    const applyFilters = () => {
+      let filtered = data;
+
+      if (filters.startsWith) {
+        filtered = filtered.filter((country) =>
+          country.name.common
+            .toLowerCase()
+            .startsWith(filters.startsWith.toLowerCase())
+        );
+      }
+
+      if (filters.contains) {
+        filtered = filtered.filter((country) =>
+          country.name.common
+            .toLowerCase()
+            .includes(filters.contains.toLowerCase())
+        );
+      }
+
+      if (filters.containsExactly) {
+        filtered = filtered.filter(
+          (country) =>
+            country.name.common.toLowerCase() ===
+            filters.containsExactly.toLowerCase()
+        );
+      }
+
+      if (filters.endsWith) {
+        filtered = filtered.filter((country) =>
+          country.name.common
+            .toLowerCase()
+            .endsWith(filters.endsWith.toLowerCase())
+        );
+      }
+
+      setFilteredData(filtered);
+    };
+    applyFilters();
+  }, [filters, data]);
 
   return (
     <>
