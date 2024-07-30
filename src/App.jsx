@@ -8,6 +8,7 @@ import data from "./data";
 
 function App() {
   const [filteredData, setFilteredData] = React.useState(data);
+
   const [filters, setFilters] = React.useState({
     startsWith: "",
     contains: "",
@@ -34,7 +35,7 @@ function App() {
 
   return (
     <>
-      <h1>New app</h1>
+      <h1>Geography Explorer</h1>
       <Filters filters={filters} handleFilterChange={handleFilterChange} />
       <Guess />
       <Results filteredData={filteredData} />
