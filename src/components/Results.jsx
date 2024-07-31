@@ -4,8 +4,8 @@ import {
   Container,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
+  ListItemAvatar,
   Box,
   Divider,
 } from "@mui/material";
@@ -13,40 +13,39 @@ import {
 export default function Results({ filteredData, guessedCountries }) {
   return (
     <Container>
-      <Box marginTop={2}>
+      <Box marginTop={3} marginRight={5}>
         <Typography variant="h4">Results</Typography>
+        <Divider />
       </Box>
-      <Divider />
       <Box marginTop={2}>
         <div
           className="scrollable-list"
           style={{ maxHeight: 410, overflowY: "auto" }}
         >
-          <List>
-            {filteredData.map((country, index) => (
-              <React.Fragment key={`${country.name}--${index}`}>
-                <ListItem>
-                  {/* <ListItemAvatar>
-                            
-                        </ListItemAvatar> */}
-                </ListItem>
-                <ListItemText
-                  primary={
-                    <Box
-                      position="relative"
-                      width="100%"
-                      display="flex"
-                      alignItems="center"
-                    >
-                      <div>Generic Text</div>
-                    </Box>
-                  }
-                />
-                <Divider />
-              </React.Fragment>
-            ))}
-          </List>
-          <ul>
+          <Box marginRight={4}>
+            <List>
+              {filteredData.map((country, index) => (
+                <React.Fragment key={`${country.name}--${index}`}>
+                  <ListItem>
+                    <ListItemAvatar src={country.flags.svg} />
+                  </ListItem>
+                  <ListItemText
+                    primary={
+                      <Box
+                        position="relative"
+                        width="100%"
+                        display="flex"
+                        alignItems="center"
+                      >
+                        <div>{country.name.common}</div>
+                      </Box>
+                    }
+                  />
+                  <Divider />
+                </React.Fragment>
+              ))}
+            </List>
+            {/* <ul>
             {filteredData.map((country) =>
               guessedCountries.includes(country.name.common.toLowerCase()) ? (
                 <li key={country.cca3} style={{ color: "green" }}>
@@ -56,7 +55,8 @@ export default function Results({ filteredData, guessedCountries }) {
                 <li key={country.cca3}>{country.name.common}</li>
               )
             )}
-          </ul>
+          </ul> */}
+          </Box>
         </div>
       </Box>
     </Container>
