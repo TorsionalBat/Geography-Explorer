@@ -38,6 +38,12 @@ function App() {
   //   });
   // }, []);
 
+  const containsAllLetters = (word, letters) => {
+    return [...letters.toLowerCase()].every((letter) =>
+      word.toLowerCase().includes(letter)
+    );
+  };
+
   // Effect to be run when the filters change, or the data changes to render the list
   React.useEffect(() => {
     const applyFilters = () => {
@@ -53,9 +59,7 @@ function App() {
 
       if (filters.contains) {
         filtered = filtered.filter((country) =>
-          country.name.common
-            .toLowerCase()
-            .includes(filters.contains.toLowerCase())
+          containsAllLetters(country.name.common, filters.contains)
         );
       }
 
