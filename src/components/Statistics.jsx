@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 
 export default function Statistics({ filteredData }) {
   const [statistics, setStatistics] = React.useState({
@@ -47,17 +47,21 @@ export default function Statistics({ filteredData }) {
   }, [filteredData]);
 
   return (
-    <Grid container spacing={2} marginTop={2}>
-      <Grid item xs>
+    <Grid
+      padding={2}
+      marginTop={2}
+      sx={{ bgcolor: "background.paper", boxShadow: 1, borderRadius: 2 }}
+    >
+      <Box>
         <Typography variant="h5">Statistics</Typography>
-        <div>
-          <p>Number of Countries: {filteredData.length}</p>
-          <p>Number of Easy: {statistics.easyCount} </p>
-          <p>Number of Medium: {statistics.mediumCount} </p>
-          <p>Number of Difficult: {statistics.hardCount} </p>
-          <p>Number of Continents: {statistics.numberOfContinents} </p>
-        </div>
-      </Grid>
+      </Box>
+      <Box display="flex" flexDirection="column">
+        <p>Number of Countries: {filteredData.length}</p>
+        <p>Number of Easy: {statistics.easyCount} </p>
+        <p>Number of Medium: {statistics.mediumCount} </p>
+        <p>Number of Difficult: {statistics.hardCount} </p>
+        <p>Number of Continents: {statistics.numberOfContinents} </p>
+      </Box>
     </Grid>
   );
 }

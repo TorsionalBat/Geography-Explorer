@@ -136,13 +136,15 @@ function App() {
   return (
     <>
       <Header />
-      <Grid container direction="row" spacing={2}>
+      <Grid container direction="row" padding={2}>
         <Grid item xs>
           <Filters filters={filters} handleFilterChange={handleFilterChange} />
         </Grid>
         <Grid
           item
           xs={6}
+          marginLeft={2}
+          marginRight={2}
           sx={{
             backgroundColor: "background.paper",
             borderRadius: 2,
