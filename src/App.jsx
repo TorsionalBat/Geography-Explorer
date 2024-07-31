@@ -3,8 +3,11 @@ import Guess from "./components/Guess";
 import Results from "./components/Results";
 import Statistics from "./components/Statistics";
 import React from "react";
+import Header from "./components/Header";
 import CountryFetcher from "./services/CountryFetcher";
 import data from "./data";
+import { Grid } from "@mui/material";
+import "./styles.css";
 
 function App() {
   // Country information that is rendered as the filters change
@@ -132,14 +135,30 @@ function App() {
 
   return (
     <>
-      <h1>Geography Explorer</h1>
-      <Filters filters={filters} handleFilterChange={handleFilterChange} />
-      <Statistics filteredData={filteredData} />
-      <Guess filteredData={filteredData} handleGuess={handleGuess} />
-      <Results
-        filteredData={filteredData}
-        guessedCountries={guessedCountries}
-      />
+      <Header />
+      <Grid container direction="row" spacing={2}>
+        <Grid item xs>
+          <Filters filters={filters} handleFilterChange={handleFilterChange} />
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            backgroundColor: "background.paper",
+            borderRadius: 2,
+            boxShadow: 1,
+          }}
+        >
+          <Results
+            filteredData={filteredData}
+            guessedCountries={guessedCountries}
+          />
+        </Grid>
+        <Grid item xs>
+          <Guess filteredData={filteredData} handleGuess={handleGuess} />
+          <Statistics filteredData={filteredData} />
+        </Grid>
+      </Grid>
     </>
   );
 }
