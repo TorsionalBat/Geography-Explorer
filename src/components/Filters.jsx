@@ -1,38 +1,54 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Box,
+  TextField,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 export default function Filters({ filters, handleFilterChange }) {
   return (
-    <div>
-      <Typography variant="h5">Filters</Typography>
-      <div>
-        <input
+    <Grid
+      padding={2}
+      sx={{ bgcolor: "background.paper", boxShadow: 1, borderRadius: 2 }}
+    >
+      <Box display="flex">
+        <Typography variant="h5">Filters</Typography>
+      </Box>
+      <Box display="flex" flexDirection="column" gap={1.5} marginTop={2}>
+        <TextField
           type="text"
           name="startsWith"
           value={filters.startsWith}
           onChange={handleFilterChange}
-          placeholder="Starts With"
+          label="Starts With"
+          size="small"
         />
-        <input
+        <TextField
           type="text"
           name="contains"
           value={filters.contains}
           onChange={handleFilterChange}
-          placeholder="Contains"
+          label="Contains"
+          size="small"
         />
-        <input
+        <TextField
           type="text"
           name="containsExactly"
           value={filters.containsExactly}
           onChange={handleFilterChange}
-          placeholder="Contains Exactly"
+          label="Contains Exactly"
+          size="small"
         />
-        <input
+        <TextField
           type="text"
           name="endsWith"
           value={filters.endsWith}
           onChange={handleFilterChange}
-          placeholder="Ends With"
+          label="Ends With"
+          size="small"
         />
         {/* <label>
           <input
@@ -52,21 +68,22 @@ export default function Filters({ filters, handleFilterChange }) {
           />
           Uppercase
         </label> */}
-        <select
+        <Select
           name="continent"
-          //   value={filters.continent}
+          value={filters.continent}
           onChange={handleFilterChange}
+          size="small"
         >
-          <option value="All">All</option>
-          <option value="Asia">Asia</option>
-          <option value="Africa">Africa</option>
-          <option value="North America">North America</option>
-          <option value="South America">South America</option>
-          <option value="Antarctica">Antarctica</option>
-          <option value="Europe">Europe</option>
-          <option value="Oceania">Oceania</option>
-        </select>
-      </div>
-    </div>
+          <MenuItem value="All">All</MenuItem>
+          <MenuItem value="Asia">Asia</MenuItem>
+          <MenuItem value="Africa">Africa</MenuItem>
+          <MenuItem value="North America">North America</MenuItem>
+          <MenuItem value="South America">South America</MenuItem>
+          <MenuItem value="Antarctica">Antarctica</MenuItem>
+          <MenuItem value="Europe">Europe</MenuItem>
+          <MenuItem value="Oceania">Oceania</MenuItem>
+        </Select>
+      </Box>
+    </Grid>
   );
 }
