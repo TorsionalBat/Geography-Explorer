@@ -17,6 +17,7 @@ function App() {
     openLetters: false,
     uppercase: false,
   });
+  const [guessedCountries, setGuessedCountries] = React.useState([]);
 
   // Function that acts as an event handler for when the filters are changed
   const handleFilterChange = (event) => {
@@ -112,15 +113,22 @@ function App() {
       setFilteredData(filtered);
     };
     applyFilters();
-  }, [filters, data]);
+  }, [filters, data, guessedCountries]);
+
+  const handleGuess = (guess) => {
+    setGuessedCountries([...guessedCountries, guess.toLowerCase()]);
+  };
 
   return (
     <>
       <h1>Geography Explorer</h1>
       <Filters filters={filters} handleFilterChange={handleFilterChange} />
       <Statistics filteredData={filteredData} />
-      <Guess filteredData={filteredData} />
-      <Results filteredData={filteredData} />
+      <Guess filteredData={filteredData} handleGuess={handleGuess} />
+      <Results
+        filteredData={filteredData}
+        guessedCountries={guessedCountries}
+      />
     </>
   );
 }
