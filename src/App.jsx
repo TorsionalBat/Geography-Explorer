@@ -27,6 +27,7 @@ function App() {
       ...prevFilters,
       [name]: type === "checkbox" ? checked : value,
     }));
+    setGuessedCountries([]);
   };
 
   // Effect that is run on initialization of the application, fetches the

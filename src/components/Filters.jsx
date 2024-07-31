@@ -33,7 +33,7 @@ export default function Filters({ filters, handleFilterChange }) {
           onChange={handleFilterChange}
           placeholder="Ends With"
         />
-        <label>
+        {/* <label>
           <input
             type="checkbox"
             name="openLetters"
@@ -50,7 +50,7 @@ export default function Filters({ filters, handleFilterChange }) {
             onChange={handleFilterChange}
           />
           Uppercase
-        </label>
+        </label> */}
         <select
           name="continent"
           //   value={filters.continent}
