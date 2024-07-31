@@ -16,6 +16,7 @@ function App() {
     endsWith: "",
     openLetters: false,
     uppercase: false,
+    continent: "All",
   });
   const [guessedCountries, setGuessedCountries] = React.useState([]);
 
@@ -49,6 +50,16 @@ function App() {
   React.useEffect(() => {
     const applyFilters = () => {
       let filtered = data;
+
+      if (filters.continent) {
+        if (filters.continent === "All") {
+          filtered = data;
+        } else {
+          filtered = filtered.filter((country) =>
+            country.continents.includes(filters.continent)
+          );
+        }
+      }
 
       if (filters.startsWith) {
         filtered = filtered.filter((country) =>
@@ -109,7 +120,6 @@ function App() {
           )
         );
       }
-
       setFilteredData(filtered);
     };
     applyFilters();
