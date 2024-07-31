@@ -1,9 +1,10 @@
 import React from "react";
+import { Typography } from "@mui/material";
 
 export default function Filters({ filters, handleFilterChange }) {
   return (
     <div>
-      <h3>Filters</h3>
+      <Typography variant="h5">Filters</Typography>
       <div>
         <input
           type="text"

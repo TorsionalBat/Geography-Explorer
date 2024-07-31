@@ -1,6 +1,7 @@
 import React from "react";
+import { Typography, Box, TextField, Button } from "@mui/material";
 
-export default function Guess({ filteredData, handleGuess }) {
+function Guess({ filteredData, handleGuess }) {
   const [guess, setGuess] = React.useState("");
 
   const handleInputChange = (event) => {
@@ -22,15 +23,35 @@ export default function Guess({ filteredData, handleGuess }) {
   };
 
   return (
-    <div>
-      <h3>Guess the Country</h3>
-      <input
+    <Box
+      display="flex"
+      flexDirection="column"
+      padding={2}
+      gap={2}
+      sx={{
+        bgColor: "background.paper",
+        boxShadow: 1,
+        borderRadius: 2,
+      }}
+    >
+      <Typography variant="h5">Guess the Country</Typography>
+      <TextField
         type="text"
+        label="Guess"
+        size="small"
         value={guess}
         onChange={handleInputChange}
-        placeholder="Enter your guess"
       />
-      <button onClick={handleClick}>Check Guess</button>
-    </div>
+      <Button
+        color="primary"
+        size="large"
+        variant="outlined"
+        onClick={handleClick}
+      >
+        Check Guess
+      </Button>
+    </Box>
   );
 }
+
+export default Guess;
