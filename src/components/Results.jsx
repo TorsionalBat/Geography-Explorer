@@ -18,7 +18,7 @@ export default function Results({ filteredData, guessedCountries }) {
         <Typography variant="h4">Results</Typography>
         <Divider />
       </Box>
-      <Box marginTop={2}>
+      <Box marginTop={2} paddingBottom={2}>
         <div
           className="scrollable-list"
           style={{ maxHeight: 410, overflowY: "auto" }}
