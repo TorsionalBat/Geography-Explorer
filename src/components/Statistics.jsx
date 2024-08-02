@@ -62,10 +62,7 @@ export default function Statistics({ filteredData }) {
       sx={{ bgcolor: "background.paper", boxShadow: 1, borderRadius: 2 }}
     >
       <Box>
-        <StatisticCard
-          number={filteredData.length}
-          description="Number of Countries"
-        />
+        <StatisticCard number={filteredData.length} description="Countries" />
         <StatisticCard
           number={statistics.numberOfContinents}
           description="Continents"

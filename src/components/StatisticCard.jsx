@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Box, Typography } from "@mui/material";
+import { Box, Typography, Avatar } from "@mui/material";
 
 export default function StatisticCard({ number, description }) {
   return (
@@ -11,7 +11,7 @@ export default function StatisticCard({ number, description }) {
         padding={1}
         alignItems="center"
       >
-        <Typography variant="h5">{number}</Typography>
+        <Avatar sx={{ padding: "5px" }}>{number}</Avatar>
         <Typography color="text.secondary">{description}</Typography>
       </Box>
     </Box>
