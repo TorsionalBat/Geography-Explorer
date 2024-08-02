@@ -10,7 +10,7 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Geography Explorer
+            Country Explorer
           </Typography>
         </Toolbar>
       </AppBar>

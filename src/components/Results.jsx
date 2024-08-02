@@ -9,7 +9,10 @@ import {
   Box,
   Divider,
   Avatar,
+  IconButton,
 } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 export default function Results({ filteredData, guessedCountries }) {
   return (
@@ -43,22 +46,14 @@ export default function Results({ filteredData, guessedCountries }) {
                         </Box>
                       }
                     />
+                    <IconButton>
+                      <VisibilityIcon />
+                    </IconButton>
                   </ListItem>
                   <Divider />
                 </React.Fragment>
               ))}
             </List>
-            {/* <ul>
-            {filteredData.map((country) =>
-              guessedCountries.includes(country.name.common.toLowerCase()) ? (
-                <li key={country.cca3} style={{ color: "green" }}>
-                  {country.name.common}
-                </li>
-              ) : (
-                <li key={country.cca3}>{country.name.common}</li>
-              )
-            )}
-          </ul> */}
           </Box>
         </div>
       </Box>
