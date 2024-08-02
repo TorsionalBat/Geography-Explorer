@@ -1,5 +1,14 @@
 import React from "react";
-import { Typography, Grid, Box } from "@mui/material";
+import StatisticCard from "./StatisticCard";
+import {
+  Typography,
+  Grid,
+  Box,
+  Paper,
+  ListItemIcon,
+  Card,
+  CardContent,
+} from "@mui/material";
 
 export default function Statistics({ filteredData }) {
   const [statistics, setStatistics] = React.useState({
@@ -53,14 +62,17 @@ export default function Statistics({ filteredData }) {
       sx={{ bgcolor: "background.paper", boxShadow: 1, borderRadius: 2 }}
     >
       <Box>
-        <Typography variant="h5">Statistics</Typography>
-      </Box>
-      <Box display="flex" flexDirection="column">
-        <p>Number of Countries: {filteredData.length}</p>
-        <p>Number of Easy: {statistics.easyCount} </p>
-        <p>Number of Medium: {statistics.mediumCount} </p>
-        <p>Number of Difficult: {statistics.hardCount} </p>
-        <p>Number of Continents: {statistics.numberOfContinents} </p>
+        <StatisticCard
+          number={filteredData.length}
+          description="Number of Countries"
+        />
+        <StatisticCard
+          number={statistics.numberOfContinents}
+          description="Continents"
+        />
+        <StatisticCard number={statistics.easyCount} description="Easy" />
+        <StatisticCard number={statistics.mediumCount} description="Medium" />
+        <StatisticCard number={statistics.hardCount} description="Difficult" />
       </Box>
     </Grid>
   );
