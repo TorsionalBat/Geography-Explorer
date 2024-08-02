@@ -8,6 +8,7 @@ import {
   ListItemAvatar,
   Box,
   Divider,
+  Avatar,
 } from "@mui/material";
 
 export default function Results({ filteredData, guessedCountries }) {
@@ -27,20 +28,22 @@ export default function Results({ filteredData, guessedCountries }) {
               {filteredData.map((country, index) => (
                 <React.Fragment key={`${country.name}--${index}`}>
                   <ListItem>
-                    <ListItemAvatar src={country.flags.svg} />
+                    <ListItemAvatar>
+                      <Avatar src={country.flags.svg}></Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={
+                        <Box
+                          position="relative"
+                          width="100%"
+                          display="flex"
+                          alignItems="center"
+                        >
+                          <div>{country.name.common}</div>
+                        </Box>
+                      }
+                    />
                   </ListItem>
-                  <ListItemText
-                    primary={
-                      <Box
-                        position="relative"
-                        width="100%"
-                        display="flex"
-                        alignItems="center"
-                      >
-                        <div>{country.name.common}</div>
-                      </Box>
-                    }
-                  />
                   <Divider />
                 </React.Fragment>
               ))}
