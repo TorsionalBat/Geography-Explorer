@@ -13,8 +13,37 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { styled } from "@mui/material/styles";
+
+const StyledAvatar = styled(Avatar)(({ visible }) => ({
+  filter: visible ? "none" : "blur(4px)",
+  transition: "filter 0.7s ease-in-out",
+}));
+
+const HiddenContent = styled("div")(({ theme }) => ({
+  filter: "blur(5px)",
+  transition: "filter 0.7s ease-in-out, color 0.7s ease-in-out",
+  color: theme.palette.text.disabled,
+}));
+
+const StyledText = styled("span")(({ visible }) => ({
+  transition: "opacity 0.7s ease-in-out",
+  opacity: visible ? 1 : 0,
+  position: "absolute",
+  width: "100%",
+  textAlign: "left",
+}));
 
 export default function Results({ filteredData, guessedCountries }) {
+  const [visibleItems, setVisibleItems] = React.useState({});
+
+  const handleToggle = (index) => {
+    setVisibleItems((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
+
   return (
     <Container>
       <Box marginTop={3} marginRight={5}>
@@ -32,7 +61,10 @@ export default function Results({ filteredData, guessedCountries }) {
                 <React.Fragment key={`${country.name}--${index}`}>
                   <ListItem>
                     <ListItemAvatar>
-                      <Avatar src={country.flags.svg}></Avatar>
+                      <StyledAvatar
+                        src={visibleItems[index] ? country.flags.svg : "?"}
+                        visible={visibleItems[index]}
+                      ></StyledAvatar>
                     </ListItemAvatar>
                     <ListItemText
                       primary={
@@ -42,12 +74,21 @@ export default function Results({ filteredData, guessedCountries }) {
                           display="flex"
                           alignItems="center"
                         >
-                          <div>{country.name.common}</div>
+                          <StyledText visible={!visibleItems[index]}>
+                            <HiddenContent>Generic Length Text</HiddenContent>
+                          </StyledText>
+                          <StyledText visible={visibleItems[index]}>
+                            {country.name.common}
+                          </StyledText>
                         </Box>
                       }
                     />
-                    <IconButton>
-                      <VisibilityIcon />
+                    <IconButton onClick={() => handleToggle(index)}>
+                      {visibleItems[index] ? (
+                        <VisibilityOffIcon />
+                      ) : (
+                        <VisibilityIcon />
+                      )}
                     </IconButton>
                   </ListItem>
                   <Divider />
