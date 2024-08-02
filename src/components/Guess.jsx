@@ -8,14 +8,14 @@ function Guess({ filteredData, handleGuess }) {
     setGuess(event.target.value);
   };
 
-  //   const handleGuess = () => {
-  //     const isInList = filteredData.some(
-  //       (country) => country.name.common.toLowerCase() === guess.toLowerCase()
-  //     );
-  //     console.log(
-  //       isInList ? "Guess is in the list!" : "Guess is not in the list."
-  //     );
-  //   };
+  // const handleGuess = () => {
+  //   const isInList = filteredData.some(
+  //     (country) => country.name.common.toLowerCase() === guess.toLowerCase()
+  //   );
+  //   console.log(
+  //     isInList ? "Guess is in the list!" : "Guess is not in the list."
+  //   );
+  // };
 
   const handleClick = () => {
     handleGuess(guess);

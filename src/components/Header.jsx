@@ -7,9 +7,9 @@ import Typography from "@mui/material/Typography";
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1, marginBottom: 2 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ padding: 2, alignItems: "center" }}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
             Country Explorer
           </Typography>
         </Toolbar>
