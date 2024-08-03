@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   Container,
@@ -37,6 +37,16 @@ const StyledText = styled("span")(({ visible }) => ({
 export default function Results({ filteredData, guessedCountries }) {
   const [visibleItems, setVisibleItems] = React.useState({});
 
+  useEffect(() => {
+    const updatedVisibleItems = {};
+    filteredData.forEach((country, index) => {
+      if (guessedCountries.includes(country.name.common.toLowerCase())) {
+        updatedVisibleItems[index] = true;
+      }
+    });
+    setVisibleItems(updatedVisibleItems);
+  }, [filteredData, guessedCountries]);
+
   const handleToggle = (index) => {
     setVisibleItems((prevState) => ({
       ...prevState,
@@ -58,7 +68,7 @@ export default function Results({ filteredData, guessedCountries }) {
           <Box marginRight={4}>
             <List>
               {filteredData.map((country, index) => (
-                <React.Fragment key={`${country.name}--${index}`}>
+                <React.Fragment key={`${country.name.common}--${index}`}>
                   <ListItem>
                     <ListItemAvatar>
                       <StyledAvatar
