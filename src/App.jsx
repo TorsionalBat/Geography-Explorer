@@ -8,6 +8,8 @@ import CountryFetcher from "./services/CountryFetcher";
 import data from "./data";
 import { Grid } from "@mui/material";
 import "./styles.css";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 function App() {
   // Country information that is rendered as the filters change
@@ -22,6 +24,8 @@ function App() {
     continent: "All",
   });
   const [guessedCountries, setGuessedCountries] = React.useState([]);
+  const [showConfetti, setShowConfetti] = React.useState(false);
+  const { width, height } = useWindowSize(); // For confetti animation
 
   // Function that acts as an event handler for when the filters are changed
   const handleFilterChange = (event) => {
@@ -133,9 +137,30 @@ function App() {
     setGuessedCountries([...guessedCountries, guess.toLowerCase()]);
   };
 
+  React.useEffect(() => {
+    const allGuessed = filteredData.every((country) =>
+      guessedCountries.includes(country.name.common.toLowerCase())
+    );
+    if (allGuessed && filteredData.length > 0) {
+      setShowConfetti(true);
+      setTimeout(() => {
+        setShowConfetti(false);
+        setGuessedCountries([]);
+      }, 6000); // Stop confetti after 5 seconds
+    }
+  }, [guessedCountries, filteredData]);
+
   return (
     <>
       <Header />
+      {showConfetti && (
+        <Confetti
+          width={width}
+          height={height}
+          numberOfPieces={1200}
+          recycle={false}
+        />
+      )}
       <Grid container direction="row" padding={2}>
         <Grid item xs>
           <Filters filters={filters} handleFilterChange={handleFilterChange} />
