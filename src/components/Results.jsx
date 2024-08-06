@@ -1,57 +1,32 @@
 import React, { useEffect } from "react";
-import {
-  Typography,
-  Container,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Box,
-  Divider,
-  Avatar,
-  IconButton,
-} from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { styled } from "@mui/material/styles";
-
-const StyledAvatar = styled(Avatar)(({ visible }) => ({
-  filter: visible ? "none" : "blur(4px)",
-  transition: "filter 0.7s ease-in-out",
-}));
-
-const HiddenContent = styled("div")(({ theme }) => ({
-  filter: "blur(5px)",
-  transition: "filter 0.7s ease-in-out, color 0.7s ease-in-out",
-  color: theme.palette.text.disabled,
-}));
-
-const StyledText = styled("span")(({ visible }) => ({
-  transition: "opacity 0.7s ease-in-out",
-  opacity: visible ? 1 : 0,
-  position: "absolute",
-  width: "100%",
-  textAlign: "left",
-}));
+import { Typography, Container, Box, Divider, List } from "@mui/material";
+import ResultListItem from "./ResultListItem";
 
 export default function Results({ filteredData, guessedCountries }) {
-  const [visibleItems, setVisibleItems] = React.useState({});
+  const [visibleItems, setVisibleItems] = React.useState({}); // State array to track items that are visible and items that are not
 
+  /* 
+    Effect handles determining what countries are visible based on a users guess.
+    Runs whenever the filteredData is updated (i.e. a user changes the filters) or
+    when the guessedCountries changes (i.e. a user submits a new guess)
+  */
   useEffect(() => {
     const newVisibleItems = {};
     guessedCountries.forEach((guessedCountry) => {
       filteredData.forEach((country, index) => {
+        // Normalize string before comparison
         if (
           normalizeString(country.name.common.toLowerCase()) ===
           normalizeString(guessedCountry.toLowerCase())
         ) {
-          newVisibleItems[index] = true;
+          newVisibleItems[index] = true; // Update visible items
         }
       });
     });
     setVisibleItems(newVisibleItems);
   }, [guessedCountries, filteredData]);
 
+  // Helper function to normalize country names (remove non-alphabetical characters for comparison)
   const normalizeString = (str) => {
     return str
       .normalize("NFD")
@@ -59,6 +34,7 @@ export default function Results({ filteredData, guessedCountries }) {
       .replace(/[-\s]/g, "");
   };
 
+  // Handles manual toggle of visiblity of result list items
   const handleToggle = (index) => {
     setVisibleItems((prevState) => ({
       ...prevState,
@@ -80,41 +56,12 @@ export default function Results({ filteredData, guessedCountries }) {
           <Box marginRight={4}>
             <List>
               {filteredData.map((country, index) => (
-                <React.Fragment key={`${country.name.common}--${index}`}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <StyledAvatar
-                        src={visibleItems[index] ? country.flags.svg : "?"}
-                        visible={visibleItems[index]}
-                      ></StyledAvatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Box
-                          position="relative"
-                          width="100%"
-                          display="flex"
-                          alignItems="center"
-                        >
-                          <StyledText visible={!visibleItems[index]}>
-                            <HiddenContent>Generic Length Text</HiddenContent>
-                          </StyledText>
-                          <StyledText visible={visibleItems[index]}>
-                            {country.name.common}
-                          </StyledText>
-                        </Box>
-                      }
-                    />
-                    <IconButton onClick={() => handleToggle(index)}>
-                      {visibleItems[index] ? (
-                        <VisibilityOffIcon />
-                      ) : (
-                        <VisibilityIcon />
-                      )}
-                    </IconButton>
-                  </ListItem>
-                  <Divider />
-                </React.Fragment>
+                <ResultListItem
+                  key={`${country.name.common}--${index}`}
+                  country={country}
+                  visible={!!visibleItems[index]}
+                  onToggle={() => handleToggle(index)}
+                />
               ))}
             </List>
           </Box>
