@@ -2,25 +2,21 @@ import React from "react";
 import { Box, Typography, Avatar, ButtonBase } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+// Custom styled component of Avatar which receives a Boolean 'visible' and applies a filter to the Avatar based on the value
 const StyledAvatar = styled(Avatar)(({ visible }) => ({
   filter: visible ? "none" : "blur(4px)",
   transition: "filter 0.7s ease-in-out",
 }));
 
-const CustomButtonBase = styled(ButtonBase)(({ theme }) => ({
+// Custom styling of ButtonBase component - provides button/clickable/ripple action to the Avatar/StyledAvatar
+const CustomButtonBase = styled(ButtonBase)(() => ({
   borderRadius: "50%",
-  overflow: "hidden",
-  "& .MuiTouchRipple-root": {
-    borderRadius: "50%",
-  },
-  "& .MuiTouchRipple-rippleVisible": {
-    color: "grey",
-  },
 }));
 
 export default function StatisticCard({ number, description, visible }) {
-  const [isVisible, setIsVisible] = React.useState(visible);
+  const [isVisible, setIsVisible] = React.useState(visible); // State to handle visibility
 
+  // Toggle visibility onClick
   const handleToggle = () => {
     setIsVisible((prev) => !prev);
   };
