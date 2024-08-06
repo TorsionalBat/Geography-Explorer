@@ -37,7 +37,7 @@ const StyledText = styled("span")(({ visible }) => ({
 export default function Results({ filteredData, guessedCountries }) {
   const [visibleItems, setVisibleItems] = React.useState({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     const newVisibleItems = {};
     guessedCountries.forEach((guessedCountry) => {
       filteredData.forEach((country, index) => {
