@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Box, TextField, Button } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
+import stringSimilarity from "string-similarity";
 
 // Define the keyframes for the shake animation
 const shake = keyframes`
@@ -33,9 +34,17 @@ function Guess({ filteredData, handleGuess }) {
 
   const handleClick = () => {
     const guessLower = guess.toLowerCase();
-    const isCorrect = filteredData.some(
-      (country) => country.name.common.toLowerCase() === guessLower
+    const normalizedGuess = normalizeString(guessLower);
+
+    const bestMatch = stringSimilarity.findBestMatch(
+      normalizedGuess,
+      filteredData.map((country) =>
+        normalizeString(country.name.common.toLowerCase())
+      )
     );
+
+    const isCorrect = bestMatch.bestMatch.rating > 0.8;
+    const closestCountry = filteredData[bestMatch.bestMatchIndex];
 
     setButtonColor(isCorrect ? "success" : "error");
     setShakeAnimation(isCorrect ? false : true);
@@ -45,8 +54,15 @@ function Guess({ filteredData, handleGuess }) {
       setButtonColor("primary");
     }, 2000);
 
-    handleGuess(guess);
+    handleGuess(isCorrect ? closestCountry.name.common : guess);
     setGuess("");
+  };
+
+  const normalizeString = (str) => {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[-\s]/g, "");
   };
 
   return (

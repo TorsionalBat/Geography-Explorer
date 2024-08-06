@@ -37,15 +37,27 @@ const StyledText = styled("span")(({ visible }) => ({
 export default function Results({ filteredData, guessedCountries }) {
   const [visibleItems, setVisibleItems] = React.useState({});
 
-  useEffect(() => {
-    const updatedVisibleItems = {};
-    filteredData.forEach((country, index) => {
-      if (guessedCountries.includes(country.name.common.toLowerCase())) {
-        updatedVisibleItems[index] = true;
-      }
+  React.useEffect(() => {
+    const newVisibleItems = {};
+    guessedCountries.forEach((guessedCountry) => {
+      filteredData.forEach((country, index) => {
+        if (
+          normalizeString(country.name.common.toLowerCase()) ===
+          normalizeString(guessedCountry.toLowerCase())
+        ) {
+          newVisibleItems[index] = true;
+        }
+      });
     });
-    setVisibleItems(updatedVisibleItems);
-  }, [filteredData, guessedCountries]);
+    setVisibleItems(newVisibleItems);
+  }, [guessedCountries, filteredData]);
+
+  const normalizeString = (str) => {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[-\s]/g, "");
+  };
 
   const handleToggle = (index) => {
     setVisibleItems((prevState) => ({
