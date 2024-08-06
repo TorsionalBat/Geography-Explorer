@@ -12,7 +12,12 @@ const shake = keyframes`
   100% { transform: translateX(0); }
 `;
 
-// Define a styled Button component with dynamic styles
+/* 
+    Custom styled button component that takes a Boolean that represents whether or not to 'shake' the button
+    as well as a colour. If the guess is correct the color is 'Success' and 'Error' for incorrect. 
+    Color will always be 'True' hence the color will always change, however, shake is not always true
+    Animated button is called within a setTimeout() hence the color will only presist for a short time.
+*/
 const AnimatedButton = styled(Button)(({ shake, color }) => ({
   ...(shake && {
     animation: `${shake} 0.5s`,
@@ -24,18 +29,28 @@ const AnimatedButton = styled(Button)(({ shake, color }) => ({
 }));
 
 function Guess({ filteredData, handleGuess }) {
-  const [guess, setGuess] = React.useState("");
-  const [shakeAnimation, setShakeAnimation] = React.useState(false);
-  const [buttonColor, setButtonColor] = React.useState("primary");
+  const [guess, setGuess] = React.useState(""); // Controlled component to handle users guess
+  const [shakeAnimation, setShakeAnimation] = React.useState(false); // Button will 'shake' on incorrect guess
+  const [buttonColor, setButtonColor] = React.useState("primary"); // Control color of the 'Guess' button - default to primary
 
+  // Handle changes on the input field, set state upon change
   const handleInputChange = (event) => {
     setGuess(event.target.value);
   };
 
+  /* 
+    Handle the 'submission' of a guess.
+        - Convert the guess to lowercase for comparison
+        - Normalize the string (i.e. remove non alphabetical characters)
+        - Use 'string similarity' library to allow for more intelligent guess comparison (handle difficult to spell countries)
+        - Update the reaction of the 'Guess' button in-line with users guess
+        - Call handleguess() which will update the guessedCountries and reveal correctly guessed countries
+  */
   const handleClick = () => {
     const guessLower = guess.toLowerCase();
     const normalizedGuess = normalizeString(guessLower);
 
+    // Returns an object with ratings property and best match property/bestMatchIndex
     const bestMatch = stringSimilarity.findBestMatch(
       normalizedGuess,
       filteredData.map((country) =>
@@ -43,21 +58,23 @@ function Guess({ filteredData, handleGuess }) {
       )
     );
 
-    const isCorrect = bestMatch.bestMatch.rating > 0.8;
-    const closestCountry = filteredData[bestMatch.bestMatchIndex];
+    const isCorrect = bestMatch.bestMatch.rating > 0.8; // True if the rating of the best match is greater than 80%
+    const closestCountry = filteredData[bestMatch.bestMatchIndex]; // The closest country to the users guess stored at this index
 
-    setButtonColor(isCorrect ? "success" : "error");
+    setButtonColor(isCorrect ? "success" : "error"); // Update button color based on whether the guess was correct or not
     setShakeAnimation(isCorrect ? false : true);
 
+    // After two seconds return button back to normal state { static and primary color }
     setTimeout(() => {
       setShakeAnimation(false);
       setButtonColor("primary");
     }, 2000);
 
-    handleGuess(isCorrect ? closestCountry.name.common : guess);
-    setGuess("");
+    handleGuess(isCorrect ? closestCountry.name.common : guess); // Handle the guess - if correct use the country name, otherwise use the guess.
+    setGuess(""); // Return input field value to empty string
   };
 
+  // Helper function to normalize country names - some countries contain symbols, or non-alphabetical characters
   const normalizeString = (str) => {
     return str
       .normalize("NFD")
