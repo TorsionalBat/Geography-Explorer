@@ -23,7 +23,7 @@ function App() {
     continent: "All",
   });
   const [guessedCountries, setGuessedCountries] = React.useState([]);
-  const [showConfetti, setShowConfetti] = React.useState(false);
+  const [showConfetti, setShowConfetti] = React.useState(false); // Boolean for confetti animation
   const { width, height } = useWindowSize(); // For confetti animation
 
   // Function that acts as an event handler for when the filters are changed
