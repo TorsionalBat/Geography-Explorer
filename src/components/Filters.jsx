@@ -6,6 +6,8 @@ import {
   TextField,
   Select,
   MenuItem,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 
 export default function Filters({ filters, handleFilterChange }) {
@@ -68,22 +70,24 @@ export default function Filters({ filters, handleFilterChange }) {
           />
           Uppercase
         </label> */}
-        <label>
-          <input
-            type="checkbox"
-            name="doubleLetters"
-            checked={filters.doubleLetters}
-            onChange={handleFilterChange}
-          />
-          Double Letters
-        </label>
+        <FormControlLabel
+          label="Double Letters"
+          sx={{ color: "text.secondary" }}
+          control={
+            <Checkbox
+              name="doubleLetters"
+              checked={filters.doubleLetters}
+              onChange={handleFilterChange}
+            />
+          }
+        />
         <Select
           name="continent"
           value={filters.continent}
           onChange={handleFilterChange}
           size="small"
         >
-          <MenuItem value="All">All</MenuItem>
+          <MenuItem value="All">All Continents</MenuItem>
           <MenuItem value="Asia">Asia</MenuItem>
           <MenuItem value="Africa">Africa</MenuItem>
           <MenuItem value="North America">North America</MenuItem>
