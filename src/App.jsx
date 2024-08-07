@@ -132,9 +132,16 @@ function App() {
     }
   }, [guessedCountries, filteredData]);
 
+  const handleHeaderClick = () => {
+    setShowConfetti(true);
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 7000);
+  };
+
   return (
     <>
-      <Header />
+      <Header handleHeaderClick={handleHeaderClick} />
       {showConfetti && (
         <Confetti
           width={width}
