@@ -12,8 +12,11 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 
-// Custom styled Avatar component which takes in a Visibility Boolean and adjusts the Avatars blur
-const StyledAvatar = styled(Avatar)(({ visible }) => ({
+// Custom styled Avatar component which takes in a Visibility Boolean and adjusts the Avatar's blur
+// Destructure props and pass to Avatar to ensure visible prop isn't passed down to Avatar component.
+const StyledAvatar = styled(({ visible, ...otherProps }) => (
+  <Avatar {...otherProps} />
+))(({ visible }) => ({
   filter: visible ? "none" : "blur(4px)",
   transition: "filter 0.7s ease-in-out",
 }));

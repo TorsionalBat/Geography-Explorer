@@ -3,7 +3,9 @@ import { Box, Typography, Avatar, ButtonBase } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 // Custom styled component of Avatar which receives a Boolean 'visible' and applies a filter to the Avatar based on the value
-const StyledAvatar = styled(Avatar)(({ visible }) => ({
+const StyledAvatar = styled(({ visible, ...otherProps }) => (
+  <Avatar {...otherProps} />
+))(({ visible }) => ({
   filter: visible ? "none" : "blur(4px)",
   transition: "filter 0.7s ease-in-out",
 }));
