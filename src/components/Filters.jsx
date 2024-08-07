@@ -52,24 +52,6 @@ export default function Filters({ filters, handleFilterChange }) {
           label="Ends With"
           size="small"
         />
-        {/* <label>
-          <input
-            type="checkbox"
-            name="openLetters"
-            checked={filters.openLetters}
-            onChange={handleFilterChange}
-          />
-          Open Letters
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="uppercase"
-            checked={filters.uppercase}
-            onChange={handleFilterChange}
-          />
-          Uppercase
-        </label> */}
         <FormControlLabel
           label="Double Letters"
           sx={{ color: "text.secondary" }}

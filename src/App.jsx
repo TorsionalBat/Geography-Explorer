@@ -19,8 +19,6 @@ function App() {
     contains: "",
     containsExactly: "",
     endsWith: "",
-    openLetters: false,
-    uppercase: false,
     dobuleLetter: false,
     continent: "All",
   });
@@ -103,36 +101,6 @@ function App() {
       if (filters.doubleLetters) {
         filtered = filtered.filter((country) =>
           /(.)\1/.test(country.name.common)
-        );
-      }
-
-      if (filters.openLetters) {
-        const openLetterSet = new Set([
-          "C",
-          "E",
-          "F",
-          "G",
-          "H",
-          "I",
-          "J",
-          "K",
-          "L",
-          "M",
-          "N",
-          "S",
-          "T",
-          "U",
-          "V",
-          "W",
-          "X",
-          "Y",
-          "Z",
-        ]);
-
-        filtered = filtered.filter((country) =>
-          [...country.name.common.toUpperCase()].every((char) =>
-            openLetterSet.has(char)
-          )
         );
       }
       setFilteredData(filtered);
