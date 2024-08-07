@@ -20,6 +20,7 @@ function App() {
     containsExactly: "",
     endsWith: "",
     dobuleLetter: false,
+    singleWords: false,
     continent: "All",
   });
   const [guessedCountries, setGuessedCountries] = React.useState([]);
@@ -101,6 +102,12 @@ function App() {
       if (filters.doubleLetters) {
         filtered = filtered.filter((country) =>
           /(.)\1/.test(country.name.common)
+        );
+      }
+
+      if (filters.singleWords) {
+        filtered = filtered.filter(
+          (country) => country.name.common.split(" ").length === 1
         );
       }
       setFilteredData(filtered);

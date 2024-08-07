@@ -63,6 +63,17 @@ export default function Filters({ filters, handleFilterChange }) {
             />
           }
         />
+        <FormControlLabel
+          label="Single Words"
+          sx={{ color: "text.secondary" }}
+          control={
+            <Checkbox
+              name="singleWords"
+              checked={filters.singleWords}
+              onChange={handleFilterChange}
+            />
+          }
+        />
         <Select
           name="continent"
           value={filters.continent}
