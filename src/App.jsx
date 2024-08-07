@@ -21,6 +21,7 @@ function App() {
     endsWith: "",
     openLetters: false,
     uppercase: false,
+    dobuleLetter: false,
     continent: "All",
   });
   const [guessedCountries, setGuessedCountries] = React.useState([]);
@@ -99,6 +100,12 @@ function App() {
         );
       }
 
+      if (filters.doubleLetters) {
+        filtered = filtered.filter((country) =>
+          hasDoubleLetters(country.name.common)
+        );
+      }
+
       if (filters.openLetters) {
         const openLetterSet = new Set([
           "C",
@@ -135,6 +142,10 @@ function App() {
 
   const handleGuess = (guess) => {
     setGuessedCountries([...guessedCountries, guess.toLowerCase()]);
+  };
+
+  const hasDoubleLetters = (name) => {
+    return /(.)\1/.test(name);
   };
 
   React.useEffect(() => {

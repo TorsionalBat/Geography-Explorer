@@ -68,6 +68,15 @@ export default function Filters({ filters, handleFilterChange }) {
           />
           Uppercase
         </label> */}
+        <label>
+          <input
+            type="checkbox"
+            name="doubleLetters"
+            checked={filters.doubleLetters}
+            onChange={handleFilterChange}
+          />
+          Double Letters
+        </label>
         <Select
           name="continent"
           value={filters.continent}
