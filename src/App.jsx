@@ -102,7 +102,7 @@ function App() {
 
       if (filters.doubleLetters) {
         filtered = filtered.filter((country) =>
-          hasDoubleLetters(country.name.common)
+          /(.)\1/.test(country.name.common)
         );
       }
 
@@ -142,10 +142,6 @@ function App() {
 
   const handleGuess = (guess) => {
     setGuessedCountries([...guessedCountries, guess.toLowerCase()]);
-  };
-
-  const hasDoubleLetters = (name) => {
-    return /(.)\1/.test(name);
   };
 
   React.useEffect(() => {
